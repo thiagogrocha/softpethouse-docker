@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  softpethouse-db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=softpethouse-admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=softpethouse
+    volumes:
+      - ../softpethouse-db/data:/var/lib/postgresql/data
+    networks:
+      - pg-network
+    
+  softpethouse-pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "15432:80"
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL: "pgadmin@trochadev.com.br"
+      - PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    networks:
+      - pg-network
+
+
+networks: 
+  pg-network:
+    driver: bridge
